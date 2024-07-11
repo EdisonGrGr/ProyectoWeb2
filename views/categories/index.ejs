@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Categorías</title>
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .category-list {
+            margin-top: 30px;
+        }
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        .category-actions form {
+            display: inline;
+        }
+        .btn {
+            margin-left: 10px;
+        }
+        .new-category-link {
+            margin-top: 20px;
+            display: block;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center">Categorías</h1>
+        <ul class="list-group category-list">
+            <% categories.forEach(category => { %>
+                <li class="list-group-item category-item">
+                    <%= category.name %>
+                    <div class="category-actions">
+                        <form action="/categories/<%= category.id %>/edit" method="GET">
+                            <button type="submit" class="btn btn-warning btn-sm">Editar</button>
+                        </form>
+                        <form action="/categories/<%= category.id %>/delete" method="POST">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+        <a href="/categories/new" class="btn btn-primary new-category-link">Nueva Categoría</a>
+    </div>
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

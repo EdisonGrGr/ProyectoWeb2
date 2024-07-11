@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Online TUMOTO</title>
+    
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+    
+    <link rel="stylesheet" href="/styles/main.css">
+    <style>
+        .product {
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px;
+            text-align: center;
+        }
+        .product h2 {
+            font-size: 1.5rem;
+        }
+        .product p {
+            font-size: 1.2rem;
+        }
+        .footer {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <header class="bg-dark text-white text-center py-3">
+        <div class="container">
+            <h1>Tienda Online TUMOTO</h1>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/">Inicio</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/cart">Carrito</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container my-4">
+        <section id="products" class="row">
+            <% if (products.length > 0) { %>
+                <% products.forEach(product => { %>
+                    <div class="col-md-4">
+                        <div class="product card">
+                            <div class="card-body">
+                                <h2 class="card-title"><%= product.name %></h2>
+                                <img src="<%= product.imageUrl %>" alt="<%= product.name %>" style="max-width: 200px;">
+                                <p class="card-text">Precio: <%= product.price %> pesos</p>
+                                <p class="card-text">Descripción: <%= product.description %></p>
+                                <form action="/cart/add" method="POST" onsubmit="showModal(event)">
+                                    <input type="hidden" name="productId" value="<%= product.id %>">
+                                    <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <div class="col-12">
+                    <p class="alert alert-info text-center">No hay productos disponibles.</p>
+                </div>
+            <% } %>
+        </section>
+    </main>
+
+    
+    <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cartModalLabel">Producto agregado al carrito</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    El producto ha sido agregado al carrito exitosamente.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <a href="/cart" class="btn btn-primary">Ver Carrito</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer text-center py-3">
+        <p>&copy; 2024 Tienda Online TUMOTO. Todos los derechos reservados.</p>
+    </footer>
+
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
+    <script>
+        function showModal(event) {
+            event.preventDefault();
+            $('#cartModal').modal('show');
+            setTimeout(() => {
+                event.target.submit();
+            }, 5000); 
+        }
+    </script>
+</body>
+</html>
